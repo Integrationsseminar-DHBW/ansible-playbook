@@ -1,0 +1,17 @@
+- name: Load example points into "{{ test_collection }}"
+  uri:
+    url: "http://{{ inventory_hostname }}:{{ qdrant_http_port }}/collections/{{ test_collection }}/points?wait=true"
+    method: PUT
+    headers:
+      api-key: "{{ admin_api_key }}"
+      Content-Type: application/json
+    body:
+      points:
+        - id: 1
+          vector: "{{ [0.0] * vector_size }}"
+          payload: { text: "Beispiel 0-Vektor" }
+        - id: 2
+          vector: "{{ [1.0] * vector_size }}"
+          payload: { text: "Beispiel 1-Vektor" }
+    body_format: json
+    status_code: 200

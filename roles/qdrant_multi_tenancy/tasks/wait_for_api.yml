@@ -1,0 +1,14 @@
+- name: Prüfe geschützten Health-Endpoint 
+  ansible.builtin.uri:
+    url: http://{{ inventory_hostname }}:{{ qdrant_http_port }}/healthz
+    method: GET
+    headers:
+      api-key: "{{ admin_api_key }}"
+    status_code: 200
+    return_content: no
+    timeout: 30
+  register: result
+  retries: 10
+  delay: 5
+  until: result.status == 200
+

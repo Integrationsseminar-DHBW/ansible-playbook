@@ -1,0 +1,5 @@
+    - name: Schreibe CSV mit Tokens
+      ansible.builtin.template:
+        src: students_with_tokens.csv.j2
+        dest: "./data/students_with_tokens.csv"
+        mode: '0644'

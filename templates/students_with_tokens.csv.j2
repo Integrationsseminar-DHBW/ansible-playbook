@@ -1,0 +1,4 @@
+Name1;Name2;E-Mail_(DH);Token
+{% for res in jwt_results.results %}
+{{ res.item.Name1 }};{{ res.item.Name2 }};{{ res.item['E-Mail_(DH)'] }};{{ res.stdout }}
+{% endfor %}

@@ -1,0 +1,13 @@
+- name: Create test collection "{{ test_collection }}"
+  uri:
+    url: "http://{{ inventory_hostname }}:{{ qdrant_http_port }}/collections/{{ test_collection }}"
+    method: PUT
+    headers:
+      api-key: "{{ admin_api_key }}"
+      Content-Type: application/json
+    body:
+      vectors:
+        size: "{{ vector_size }}"
+        distance: "{{ distance }}"
+    body_format: json
+    status_code: [200,201,409]

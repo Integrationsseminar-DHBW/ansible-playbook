@@ -1,0 +1,13 @@
+- name: delete student collection for each student
+  ansible.builtin.uri:
+    url: "http://{{ inventory_hostname }}:{{ qdrant_http_port }}/collections/{{ item.Name1|lower }}_{{ item.Name2|lower }}"
+    method: DELETE
+    headers:
+      api-key: "{{ admin_api_key }}"
+      Content-Type: application/json
+    body_format: json
+    status_code: [200,201,409]
+  loop: "{{ students.list }}"
+  loop_control:
+    label: "{{ item['E-Mail_(DH)'] }}"
+

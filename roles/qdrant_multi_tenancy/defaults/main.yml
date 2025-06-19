@@ -1,0 +1,9 @@
+# Standard-Variablen – überall überschreibbar
+vector_size:      1536
+distance:         Cosine
+test_collection:  demo_test
+source_collection: "actor_embeddings"
+vector_size_actors_embeddings: 6
+distance_actors_embeddings: Euclid
+
+

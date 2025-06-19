@@ -1,0 +1,13 @@
+---
+- name: Qdrant Multi-Tenancy aufsetzen
+  hosts: qdrant_servers
+  connection: local
+  environment:
+    PYTHONIOENCODING: utf-8
+  gather_facts: false
+
+  vars:
+    students_csv_path: data/students.csv
+
+  roles:
+    - qdrant_multi_tenancy

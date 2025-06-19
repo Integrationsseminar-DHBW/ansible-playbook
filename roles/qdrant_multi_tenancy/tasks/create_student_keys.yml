@@ -1,0 +1,30 @@
+- name: Generiere JWTs für alle Studierenden
+  ansible.builtin.shell: |
+    python3 - << 'EOF'
+    import jwt, time
+    MASTER_KEY = "{{ admin_api_key }}"
+    now = int(time.time())
+    payload = {
+      "iat": now,
+      "access": [
+        {
+          "collection": "actor_embeddings_{{ item.Name1 | lower }}_{{ item.Name2 | lower }}",
+          "access": "rw"
+        }
+      ]
+    }
+    print(jwt.encode(payload, MASTER_KEY, algorithm="HS256"))
+    EOF
+  args:
+    executable: /bin/bash
+  loop: "{{ students.list }}"
+  loop_control:
+    label: "{{ item['E-Mail_(DH)'] }}"
+  register: jwt_results
+
+- name: Zeige die generierten JWTs an
+  ansible.builtin.debug:
+    msg: "JWT für {{ item.item['E-Mail_(DH)'] }} → {{ item.stdout }}"
+  loop: "{{ jwt_results.results }}"
+  loop_control:
+    label: "{{ item.item['E-Mail_(DH)'] }}"

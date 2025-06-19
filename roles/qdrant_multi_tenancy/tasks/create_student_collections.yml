@@ -1,0 +1,19 @@
+- name: Create student collection for each student from specific collection
+  ansible.builtin.uri:
+    url: "http://{{ inventory_hostname }}:{{ qdrant_http_port }}/collections/actor_embeddings_{{ item.Name1|lower }}_{{ item.Name2|lower }}"
+    method: PUT
+    headers:
+      api-key: "{{ admin_api_key }}"
+      Content-Type: application/json
+    body_format: json
+    body:
+      vectors:
+        size: "{{ vector_size_actors_embeddings }}"
+        distance: "{{ distance_actors_embeddings }}"
+      init_from:
+        collection: "{{ source_collection }}"
+    status_code: [200,201,409]
+  loop: "{{ students.list }}"
+  loop_control:
+    label: "{{ item['E-Mail_(DH)'] }}"
+

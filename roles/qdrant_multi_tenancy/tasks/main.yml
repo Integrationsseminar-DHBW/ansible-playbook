@@ -1,0 +1,32 @@
+# roles/qdrant_multi_tenancy/tasks/main.yml
+  - name: Read users from CSV file and return a list
+    community.general.read_csv:
+      path: "{{ students_csv_path }}"
+      fieldnames: Name1,Name2,E-Mail_(DH)
+      delimiter: ';'
+    register: students
+
+  - name: Ausgabe der eingelesenen Studenten
+    debug:
+      var: students
+      
+  # 2) API verfügbar?
+  - import_tasks: wait_for_api.yml
+
+  # 5) Leere Collections für Studierende anlegen
+  - import_tasks: create_student_empty_collections.yml
+
+  # 6) Collections für Studierende erstellen
+  - import_tasks: create_student_collections.yml
+
+  # 7) API-Keys für Studierende anlegen
+  - import_tasks: create_student_keys.yml
+  
+  # 8) Write student CSV with tokens
+  - import_tasks: write_stud_csv_with_token.yml
+
+  # 9) Delete students Collections
+  - import_tasks: delete_students_collections.yml
+
+  # 10) Delete students empty Collections
+  - import_tasks: delete_students_empty_collections.yml

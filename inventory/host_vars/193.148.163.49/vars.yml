@@ -1,0 +1,3 @@
+# host_vars/193.148.163.49/vars.yml
+admin_api_key: "{{ vault_admin_api_key }}"
+
