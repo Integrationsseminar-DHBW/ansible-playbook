@@ -30,6 +30,7 @@ Dieses Repository enthält ein Ansible-Playbook mit Rollen zur automatisierten M
 │       └── vars/
 ├── templates/
 │   └── students_with_tokens.csv.j2   # Jinja2-Template für Token-CSV
+├── requirements.txt                  # Python-Abhängigkeiten
 └── README.md
 ```
 
@@ -38,19 +39,33 @@ Dieses Repository enthält ein Ansible-Playbook mit Rollen zur automatisierten M
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - Python 3 auf dem Steuerungsrechner
 - Zugangsdaten und API-Keys für die Ziel-Qdrant-Server (nicht im Repo!)
-- Python-Pakete: `pyjwt`, `requests` (werden ggf. im Playbook installiert)
+- Python-Pakete: `pyjwt`, `requests` (siehe `requirements.txt`)
 
 ## Nutzung
 
-1. Passe [`inventory/hosts.ini`](inventory/hosts.ini) mit Zielsystemen an (keine echten Zugangsdaten im Repo!).
-2. Trage Studierende in [`data/students.csv`](data/students.csv) ein.
-3. Führe das Playbook aus:
+1. **Vault-Passwort einrichten:**  
+   Erstelle eine Datei `.vault_pass.txt` im Projektverzeichnis und füge das Vault-Passwort ein. Diese Datei wird benötigt, um verschlüsselte Variablen zu entschlüsseln.
 
-    ```bash
-    ansible-playbook -i inventory/hosts.ini playbook.yml --vault-password-file .vault_pass.txt
-    ```
+2. **Python-Abhängigkeiten installieren:**  
+   Installiere die benötigten Python-Pakete mit:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. Die generierten Tokens findest du danach in `data/students_with_tokens.csv`.
+3. **Inventar anpassen:**  
+   Passe [`inventory/hosts.ini`](inventory/hosts.ini) mit Zielsystemen an (keine echten Zugangsdaten im Repo!).
+
+4. **Studierendendaten einfügen:**  
+   Trage Studierende in [`data/students.csv`](data/students.csv) ein.
+
+5. **Playbook ausführen:**  
+   Führe das Playbook aus:
+   ```bash
+   ansible-playbook -i inventory/hosts.ini playbook.yml --vault-password-file .vault_pass.txt
+   ```
+
+6. **Ergebnisse prüfen:**  
+   Die generierten Tokens findest du danach in `data/students_with_tokens.csv`.
 
 ## Rollenbeschreibung
 
