@@ -31,6 +31,7 @@ Dieses Repository enthält ein Ansible-Playbook mit Rollen zur automatisierten M
 ├── templates/
 │   └── students_with_tokens.csv.j2   # Jinja2-Template für Token-CSV
 ├── requirements.txt                  # Python-Abhängigkeiten
+├── .vault_pass_template.txt          # Vorlage für das Vault-Passwort
 └── README.md
 ```
 
@@ -44,7 +45,11 @@ Dieses Repository enthält ein Ansible-Playbook mit Rollen zur automatisierten M
 ## Nutzung
 
 1. **Vault-Passwort einrichten:**  
-   Erstelle eine Datei `.vault_pass.txt` im Projektverzeichnis und füge das Vault-Passwort ein. Diese Datei wird benötigt, um verschlüsselte Variablen zu entschlüsseln.
+   - Benenne die Datei `.vault_pass_template.txt` in `.vault_pass.txt` um:
+     ```bash
+     mv .vault_pass_template.txt .vault_pass.txt
+     ```
+   - Öffne die Datei `.vault_pass.txt` und füge dein Vault-Passwort ein.
 
 2. **Python-Abhängigkeiten installieren:**  
    Installiere die benötigten Python-Pakete mit:
